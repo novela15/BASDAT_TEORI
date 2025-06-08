@@ -1,0 +1,113 @@
+Microsoft Windows [Version 10.0.22631.5335]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\lenovo>CD C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 16
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> drop database perpustakaan_basdat_teori;
+ERROR 1008 (HY000): Can't drop database 'perpustakaan_basdat_teori'; database doesn't exist
+MariaDB [(none)]> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'database' at line 1
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+5 rows in set (0.091 sec)
+
+MariaDB [(none)]> CREATE DATABASE PERPUS_BASDAT_TEORI;
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [(none)]> USE PERPUS_BASDAT_TEORI;
+Database changed
+MariaDB [PERPUS_BASDAT_TEORI]> CREATE TABLE BUKU (
+    -> ISBN VARCHAR(20) PRIMARY KEY,
+    -> JUDUL VARCHAR(100) NOT NULL,
+    -> PENULIS VARCHAR(100) NOT NULL,
+    -> HARGA DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.095 sec)
+
+MariaDB [PERPUS_BASDAT_TEORI]> CREATE TABLE ANGGOTA (
+    -> ID_ANGGOTA INT PRIMARY KEY,
+    -> NAMA VARCHAR(100),
+    -> ALAMAT VARCHAR(200),
+    -> TANGGAL_LAHIR DATE
+    -> );
+Query OK, 0 rows affected (0.026 sec)
+
+MariaDB [PERPUS_BASDAT_TEORI]> SHOW TABLES;
++-------------------------------+
+| Tables_in_perpus_basdat_teori |
++-------------------------------+
+| anggota                       |
+| buku                          |
++-------------------------------+
+2 rows in set (0.003 sec)
+
+MariaDB [PERPUS_BASDAT_TEORI]> INSERT INTO BUKU (ISBN, JUDUL, PENULIS, HARGA) VALUES
+    -> ('1010', 'Pemrograman Dasar', 'Novela', 45000),
+    -> ('1011', 'Administrasi Infrastruktur Jaringan', 'Eka', 50000),
+    -> ('1012', 'Administrasi Sistem Jaringan', 'Saputri', 50000),
+    -> ('1013', 'Struktur Data', 'Eshano', 56000),
+    -> ('1014', 'Basis Data', 'Adwitiya', 59000);
+Query OK, 5 rows affected (0.156 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [PERPUS_BASDAT_TEORI]> INSERT INTO ANGGOTA (ID_Anggota, Nama, Alamat, Tanggal_Lahir) VALUES
+    -> (1, 'Novela', 'Kendal', '2006-11-15'),
+    -> (2, 'Putri', 'Semarang', '2000-02-23'),
+    -> (3, 'Hamzah', 'Aceh', '2007-03-02'),
+    -> (4, 'Anggun', 'Yogyakarta', '2005-04-28'),
+    -> (5, 'Tiya', 'Wonosobo', '2003-10-06');
+Query OK, 5 rows affected (0.009 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [PERPUS_BASDAT_TEORI]> UPDATE `BUKU` SET `Harga` = '58000' WHERE ISBN = '1010';
+Query OK, 1 row affected (0.022 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [PERPUS_BASDAT_TEORI]> DELETE FROM `ANGGOTA` WHERE `ID_Anggota` = '1';
+Query OK, 1 row affected (0.009 sec)
+
+MariaDB [PERPUS_BASDAT_TEORI]> SELECT * FROM BUKU;
++------+-------------------------------------+----------+----------+
+| ISBN | JUDUL                               | PENULIS  | HARGA    |
++------+-------------------------------------+----------+----------+
+| 1010 | Pemrograman Dasar                   | Novela   | 58000.00 |
+| 1011 | Administrasi Infrastruktur Jaringan | Eka      | 50000.00 |
+| 1012 | Administrasi Sistem Jaringan        | Saputri  | 50000.00 |
+| 1013 | Struktur Data                       | Eshano   | 56000.00 |
+| 1014 | Basis Data                          | Adwitiya | 59000.00 |
++------+-------------------------------------+----------+----------+
+5 rows in set (0.011 sec)
+
+MariaDB [PERPUS_BASDAT_TEORI]> SELECT * FROM ANGGOTA
+    -> WHERE YEAR(Tanggal_Lahir) > 2000;
++------------+--------+------------+---------------+
+| ID_ANGGOTA | NAMA   | ALAMAT     | TANGGAL_LAHIR |
++------------+--------+------------+---------------+
+|          3 | Hamzah | Aceh       | 2007-03-02    |
+|          4 | Anggun | Yogyakarta | 2005-04-28    |
+|          5 | Tiya   | Wonosobo   | 2003-10-06    |
++------------+--------+------------+---------------+
+3 rows in set (0.007 sec)
+
+MariaDB [PERPUS_BASDAT_TEORI]> Bye
+Ctrl-C -- exit!
+
+C:\xampp\mysql\bin>
